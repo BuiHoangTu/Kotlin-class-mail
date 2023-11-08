@@ -1,7 +1,9 @@
 package com.bhtu.gmail
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,9 +37,10 @@ class MainActivity : AppCompatActivity() {
             val sender = senders[random.nextInt(0, senders.size)]
             val delimiter = sender.indexOf(' ')
             val firstName = sender.lowercase().subSequence(0, delimiter)
-            val restName = sender.lowercase().subSequence(delimiter + 1, sender.length - 1)
+            val restName = sender.lowercase().subSequence(delimiter + 1, sender.length)
 
-            val avatar = this.resources.getIdentifier("user_${firstName}_${restName}", "mipmap", this.packageName)
+            val avatar = this.resources.getIdentifier("user_${firstName}_${restName}", "drawable", this.packageName)
+            Log.v("TAG", "avatar_id of user_${firstName}_${restName} = $avatar")
 
             incomingEmails.add(IncomingEmail(
                 sender,
@@ -48,9 +51,10 @@ class MainActivity : AppCompatActivity() {
                 avatar))
         }
 
-
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MailAdapter(incomingEmails, applicationContext)
+
+
     }
 }
 
